@@ -33,20 +33,59 @@ Secure Login Test Site
 						});
 						$("#send").click(function()
 						{
-							var pin = $('#pass').val();
-							$.post("securepw.php",
+							var frominput = $('#pass').val();
+							if(frominput!=0)
 							{
-								pin,
-							},
-							function(there)
+								var objpin = {"pin":frominput};
+								var jsonpin = JSON.stringify(objpin);
+								$('#pass').val('');
+								$.ajax
+								({
+									url: 'securepw.php',
+									type: 'POST',
+									contentType:'application/json',
+									data: jsonpin,
+									dataType:'json',
+									success: function(back)
+									{
+										 alert(back.access);
+									}
+								});
+							}
+							else
 							{
-								alert(there);
-							});
-							$('#pass').val('');
+								alert("Enter the token");
+							}
 						});
 						</script>
 					</div>
 				</div>
+			<div class="col-md-4">
+			</div>
+		</div>
+		<div class="row bitdown">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+			<div class="text-center">
+				Don't have NFC Tag and phone connected to the site?  Click<button id="temp">here</button>to generate a temporary token. 
+				<script>
+				$("#temp").click(function()
+				{
+					$.ajax
+					({
+						url: 'createTmp.php',
+						type: 'GET',
+						dataType: 'json',
+						success: function(tmp)
+						{
+							alert("Temporary token is: "+tmp.temp);
+						}
+					});
+				});
+				</script>
+			</div>
+			</div>
 			<div class="col-md-4">
 			</div>
 		</div>

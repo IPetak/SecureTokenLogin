@@ -6,29 +6,32 @@ class PassMaker
 	public $pw;
 	function setPass()
 	{
+		$charFile = fopen("characters.txt", "r") or die("Error!");
+		$readFile = fread($charFile,filesize("characters.txt") );
+		$chars=explode(",", $readFile);
+		fclose($charFile);
 		for( $i=0; $i<=5; $i++)
 		{
 			$r=rand(0,35);
-			$signs = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 			if($i==1)
 			{
-				$one=$signs[$r];
+				$one=$chars[$r];
 			}
 			else if($i==2)
 			{
-				$two=$signs[$r];
+				$two=$chars[$r];
 			}
 			else if($i==3)
 			{
-				$three=$signs[$r];
+				$three=$chars[$r];
 			}
 			else if($i==4)
 			{
-				$four=$signs[$r];
+				$four=$chars[$r];
 			}
 			else if($i==5)
 			{
-				$five=$signs[$r];
+				$five=$chars[$r];
 			}
 		}
 		$token=$one.$two.$three.$four.$five;

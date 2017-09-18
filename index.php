@@ -20,11 +20,14 @@ Secure Login Test Site
 					<div class="text-center littledown">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input id="pass" type="password" class="form-control" name="password" placeholder="Security Token">
+							<input data-toggle="tooltip" title="Input field is case sensitive!" id="pass" type="password" class="form-control" name="password" placeholder="Security Token">
 						</div> 
 						<br>
 						<button id="send" type="button" class="btn btn-primary">Send</button>
 						<script>
+						$(document).ready(function(){
+							$('[data-toggle="tooltip"]').tooltip();   
+						});
 						$("#pass").keyup(function(event){
 						if(event.keyCode == 13)
 						{
@@ -54,7 +57,7 @@ Secure Login Test Site
 							}
 							else
 							{
-								alert("Enter the token");
+								alert("Please enter the token!");
 							}
 						});
 						</script>

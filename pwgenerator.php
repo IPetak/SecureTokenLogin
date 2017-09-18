@@ -39,16 +39,20 @@ class PassMaker
 	{
 		try
 		{
-			$dbcon = new PDO("mysql:host=$host;dbname=$db",$user,$pass);
-			$dbcon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$pwsave="UPDATE tags SET password='$this->pw'";
-			$pwwrite=$dbcon->prepare($pwsave);
-			$pwwrite->execute();
+			$dbconn = new PDO("mysql:host=$host;dbname=$db",$user,$pass);
+			$dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$pwsave='UPDATE tags SET password=:tk_hash';
+			$prepToken=$dbconn->prepare($pwsave);
+			$prepToken->bindParam(':tk_hash', $tokenHash, PDO::PARAM_STR, 5);
+			$tokenHash=$this->pw;
+			$prepToken->execute();
 		}
 		catch(PDOException $e)
 		{
 			echo $e->getMessage();
 		}
+		
 	}
 }
+
 ?>

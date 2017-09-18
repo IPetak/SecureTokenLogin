@@ -5,10 +5,12 @@ $getAjax = file_get_contents("php://input");
 $decodeAjax = json_decode($getAjax);
 $token = $decodeAjax->pin;
 $encToken=md5($token);
+
 try
 {
-	$sql="SELECT * FROM tags WHERE password='$encToken'";
+	$sql="SELECT * FROM tags WHERE password=:encToken";
 	$prep=$dbcon->prepare($sql);
+	$prep->bindParam(':encToken', $encToken, PDO::PARAM_STR, 5);
 	$prep->execute();
 	$res=$prep->rowCount();
 	if ($res==1)

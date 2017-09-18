@@ -9,11 +9,13 @@ $gen->storePass($host, $db, $user, $pass);
 
 if(isset($_POST['retag']))
 {
-	$retagid=md5($_POST['retag']);
 	try
 	{
-		$sql="SELECT * FROM tags WHERE password='$retagid'";
+		$sql="SELECT * FROM tags WHERE password=:retagid";
 		$prep=$dbcon->prepare($sql);
+		$reid=filter_input(INPUT_POST, 'retag', FILTER_SANITIZE_NUMBER_INT);
+		$prep->bindParam(':retagid', $retagid, PDO::PARAM_INT);
+		$retagid=md5($reid);
 		$prep->execute();
 		$count=$prep->rowCount();
 		if($count==1)
